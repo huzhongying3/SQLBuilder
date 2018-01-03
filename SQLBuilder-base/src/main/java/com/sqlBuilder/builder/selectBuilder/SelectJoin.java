@@ -1,4 +1,4 @@
-package com.sqlBuilder.builder.selectBuilder.model;
+package com.sqlBuilder.builder.selectBuilder;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;

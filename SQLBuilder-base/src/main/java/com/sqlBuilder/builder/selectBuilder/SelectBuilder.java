@@ -5,5 +5,7 @@ package com.sqlBuilder.builder.selectBuilder;
  */
 public class SelectBuilder {
 
+    public SelectColumnList columns(String... columns){
 
+    }
 }

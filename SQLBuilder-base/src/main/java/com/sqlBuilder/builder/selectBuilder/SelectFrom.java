@@ -1,18 +1,23 @@
-package com.sqlBuilder.builder.selectBuilder.model;
+package com.sqlBuilder.builder.selectBuilder;
 
+import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
 import com.sqlBuilder.model.ISqlNode;
+
+import java.util.List;
 
 /**
  * Created by lenovo on 2018/1/3.
  */
-public class SelectJoinOn implements ISqlNode {
-
+class SelectFrom implements ISqlNode {
+    private String aliasName;
+    private String tableName;
     private SelectWhere where;
     private SelectJoin join;
 
 
-    public SelectWhere where() {
-        this.where = new SelectWhere();
+    public SelectWhere where(Condition condition) {
+        this.where = new SelectWhere(condition);
         return where;
     }
 
@@ -47,8 +52,30 @@ public class SelectJoinOn implements ISqlNode {
     }
 
 
+
+    SelectFrom(String tableName, String aliasName) {
+        this.tableName = tableName;
+        this.aliasName = aliasName;
+    }
+
+
     @Override
     public String getSelfSql() {
-        return null;
+        List<String> sqlList = Lists.newArrayList();
+        sqlList.add("from");
+
+        sqlList.add(tableName);
+        if (aliasName != null) {
+            sqlList.add("as");
+            sqlList.add(aliasName);
+
+        }
+        if (where != null) {
+            sqlList.add(where.getSelfSql());
+        } else if (join != null) {
+            sqlList.add(join.getSelfSql());
+        }
+
+        return Joiner.on(' ').join(sqlList);
     }
 }
